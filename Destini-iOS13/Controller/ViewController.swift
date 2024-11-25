@@ -10,26 +10,31 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var storyLabel: UILabel!
-    @IBOutlet weak var choice1Button: UIButton!
+
     @IBOutlet weak var choice2Button: UIButton!
-    var storyBrain = StoryBrain()
+    @IBOutlet weak var choice1Button: UIButton!
+    @IBOutlet weak var scriptLabel: UILabel!
+    private var storyBrain = StoryBrain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setStory(story: storyBrain.currentStory)
-
+        updateUi()
     }
     
-    private func setStory(story: Story) {
-        storyLabel.text = story.title
-        choice1Button.setTitle(story.choice1, for: .normal)
-        choice2Button.setTitle(story.choice2, for: .normal)
+ 
+    @IBAction func chocie2Selected(_ sender: UIButton) {
+        storyBrain.secondChoiceChoiceSelected()
+        updateUi()
     }
-
-    @IBAction func choiceMade(_ sender: UIButton) {
-        setStory(story: storyBrain.nextStory(choice: sender.currentTitle ?? ""))
+    @IBAction func choice1Selected(_ sender: UIButton) {
+        storyBrain.firstChoiceSelected()
+        updateUi()
     }
     
+    private func updateUi() {
+        scriptLabel.text = storyBrain.getCurrentStoryTitle()
+        choice1Button.setTitle(storyBrain.getCurrentStoryChoice1(), for: .normal)
+        choice2Button.setTitle(storyBrain.getCurrentStoryChoice2(), for: .normal)
+    }
 }
 
